@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ASCII Code Quiz</title>
+</head>
+<body>
+  <h1>ASCII Code Quiz</h1>
+  <p>請問 ASCII code 中，小寫英文字母 'a' 的十進位碼是多少？</p>
+  <form id="quizForm">
+    <input type="radio" id="optionA" name="answer" value="A">
+    <label for="optionA">A) 65</label><br>
+    <input type="radio" id="optionB" name="answer" value="B">
+    <label for="optionB">B) 97</label><br>
+    <input type="radio" id="optionC" name="answer" value="C">
+    <label for="optionC">C) 112</label><br>
+    <input type="radio" id="optionD" name="answer" value="D">
+    <label for="optionD">D) 85</label><br><br>
+    <button type="button" onclick="submitQuiz()">提交答案</button>
+  </form>
+
+  <script>
+    function submitQuiz() {
+      const form = document.getElementById('quizForm');
+      const selectedAnswer = form.querySelector('input[name="answer"]:checked');
+
+      if (selectedAnswer) {
+        const answer = selectedAnswer.value;
+
+        // 將使用者答題結果轉換成 FHIR QuestionnaireResponse JSON 資料
+        const response = {
+          resourceType: 'QuestionnaireResponse',
+          item: [
+            {
+              linkId: '1',
+              answer: [{ valueString: answer }]
+            }
+          ]
+        };
+
+        console.log(JSON.stringify(response, null, 2));
+        // 這裡可以將 JSON 資料送至伺服器或進行其他操作
+      } else {
+        alert('請選擇一個答案');
+      }
+    }
+  </script>
+</body>
+</html>
